@@ -246,6 +246,86 @@
             animation: gradient-shift 5s ease infinite;
         }
 
+        /* Glitch Effect */
+        .hero h1 .gradient-text {
+            position: relative;
+        }
+
+        .hero h1 .gradient-text::before,
+        .hero h1 .gradient-text::after {
+            content: 'Intelligent Systems';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero h1 .gradient-text::before {
+            animation: glitch-1 3s infinite linear alternate-reverse;
+            clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+        }
+
+        .hero h1 .gradient-text::after {
+            animation: glitch-2 2s infinite linear alternate-reverse;
+            clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+        }
+
+        @keyframes glitch-1 {
+
+            0%,
+            90% {
+                transform: translate(0);
+            }
+
+            92% {
+                transform: translate(-2px, 1px);
+            }
+
+            94% {
+                transform: translate(2px, -1px);
+            }
+
+            96% {
+                transform: translate(-1px, 2px);
+            }
+
+            98% {
+                transform: translate(1px, -2px);
+            }
+
+            100% {
+                transform: translate(0);
+            }
+        }
+
+        @keyframes glitch-2 {
+
+            0%,
+            88% {
+                transform: translate(0);
+            }
+
+            90% {
+                transform: translate(2px, -1px);
+            }
+
+            93% {
+                transform: translate(-2px, 1px);
+            }
+
+            96% {
+                transform: translate(1px, 2px);
+            }
+
+            100% {
+                transform: translate(0);
+            }
+        }
+
         @keyframes gradient-shift {
 
             0%,
@@ -305,11 +385,29 @@
             background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
             color: white;
             box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple), var(--neon-green));
+            border-radius: 10px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            filter: blur(10px);
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 40px rgba(0, 240, 255, 0.5);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 40px rgba(0, 240, 255, 0.4), 0 0 60px rgba(176, 38, 255, 0.3);
         }
 
         .btn-secondary {
@@ -338,15 +436,45 @@
             position: relative;
             border-radius: 50%;
             overflow: hidden;
-            border: 2px solid rgba(0, 240, 255, 0.3);
-            box-shadow: 0 0 60px rgba(0, 240, 255, 0.2);
+            border: 3px solid transparent;
+            background: linear-gradient(var(--dark-bg), var(--dark-bg)) padding-box,
+                linear-gradient(135deg, var(--neon-cyan), var(--neon-purple), var(--neon-green)) border-box;
+            box-shadow:
+                0 0 60px rgba(0, 240, 255, 0.3),
+                0 0 100px rgba(176, 38, 255, 0.2),
+                inset 0 0 60px rgba(0, 240, 255, 0.1);
+            animation: avatar-glow 4s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
+
+        .agent-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes avatar-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 60px rgba(0, 240, 255, 0.3), 0 0 100px rgba(176, 38, 255, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 0 80px rgba(0, 240, 255, 0.5), 0 0 120px rgba(176, 38, 255, 0.4);
+            }
         }
 
         .agent-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: saturate(1.2) contrast(1.1);
+            object-position: center top;
+            filter: saturate(1.1) contrast(1.05);
+            transition: transform 0.5s ease, filter 0.3s ease;
+        }
+
+        .agent-avatar:hover img {
+            transform: scale(1.1);
+            filter: saturate(1.3) contrast(1.1);
         }
 
         .agent-ring {
@@ -993,8 +1121,7 @@
                 <div class="agent-ring"></div>
                 <div class="agent-ring"></div>
                 <div class="agent-avatar">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&h=800&fit=crop"
-                        alt="Mayank Rai">
+                    <img src="profile.jpg" alt="Mayank Rai">
                 </div>
                 <div class="floating-badge">Node.js • Golang</div>
                 <div class="floating-badge">AWS • Kafka</div>
